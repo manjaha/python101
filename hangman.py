@@ -15,13 +15,18 @@ def game_process(list_to_guess, used_letters, secret_word, cnt, attempts, guesse
                        if x == letter_to_guess]
             for i in indices:
                 guessed_word[i] = letter_to_guess
-            print(f'Word to guess ({len(secret_word)} letters):',
-                  ''.join(guessed_word),
-                  f'[{len(list_to_guess)} potential word(s) left]')
-            used_letters.append(letter_to_guess)
-            if ''.join(guessed_word) == secret_word:
+                for word in list_to_guess:
+                    list_to_guess = [x for x in list_to_guess if x[i] == letter_to_guess]
+            if len(list_to_guess) == 1 or ''.join(guessed_word) == secret_word:
+                print(f'Word to guess ({len(secret_word)} letters):',
+                      list_to_guess[0])
                 print(f'Word is guessed in {attempts} attempts')
                 break
+            else:
+                print(f'Word to guess ({len(secret_word)} letters):',
+                      ''.join(guessed_word),
+                      f'[{len(list_to_guess)} potential word(s) left]')
+            used_letters.append(letter_to_guess)
             continue
         elif letter_to_guess not in secret_word:
             cnt = 1
@@ -32,8 +37,7 @@ def game_process(list_to_guess, used_letters, secret_word, cnt, attempts, guesse
                     list_to_guess.remove(word)
             if len(list_to_guess) == 1:
                 print(f'False!\nWord to guess ({len(secret_word)} letters):',
-                      list_to_guess[0],
-                      f'[{len(list_to_guess)} potential word(s) left]')
+                      list_to_guess[0])
                 print(f'Word is guessed in {attempts} attempts')
                 break
             else:
@@ -62,7 +66,7 @@ def main():
             continue
         else:
             break
-    # 3. generate list of potential words based on secret_word length
+    #  3. generate list of potential words based on secret_word length
     for key, value in words.items():
         if value == len(secret_word):
             list_to_guess.append(key)
@@ -71,7 +75,7 @@ def main():
     print(f'Word to guess ({len(secret_word)} letters):',
           ''.join(guessed_word),
           f'[{len(list_to_guess)} potential word(s) left]')
-    # 5. start secret_word guessing
+    #  5. start secret_word guessing
     game_process(list_to_guess, used_letters, secret_word, cnt, attempts, guessed_word)
 
 
