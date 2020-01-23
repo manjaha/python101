@@ -8,13 +8,15 @@ import sys
 csv_filepath = sys.argv[1]
 json_filepath = sys.argv[2]
 
+
+data = []
 if os.path.isfile(csv_filepath):
     with open(csv_filepath, 'r') as f:
         csv_data = csv.DictReader(f, quotechar='"')
         with open(json_filepath, 'w') as json_file:
             for row in csv_data:
                 row['password'] = '****'
-                json.dump(row, json_file)
-                json_file.write('\n')
+                data.append(row)
+            json_file.write(json.dumps(data, indent=4))
 else:
     print(f"'{csv_filepath}' does not exist")
