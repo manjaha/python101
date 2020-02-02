@@ -1,6 +1,6 @@
 import os, sys, csv
 
-#  python readcsv.py example.csv "Trait Sack"
+#  python readcsv.py example.csv "Trait Stack"
 
 filepath = sys.argv[1]
 column = sys.argv[2]
